@@ -1,131 +1,272 @@
-/* LISTDOMEN — учебный прототип. Интерактив главного экрана и формы заявки. */
+/* LISTDOMEN — учебный прототип, версия 2.
+   Переключение полноэкранных разделов и форма заявки. */
 
 (() => {
   'use strict';
 
-  const header = document.querySelector('.site-header');
+  const root = document.documentElement;
+
+  /* Если main.js не загрузился, страница через 2 с вернётся к обычной вёрстке. */
+  root.classList.add('js');
+  root.dataset.deck = 'ready';
+
+  const screens = Array.from(document.querySelectorAll('.screen'));
+  if (!screens.length) return;
+
   const nav = document.getElementById('primary-nav');
-  const menuToggle = document.querySelector('.menu-toggle');
-  const hero = document.getElementById('hero');
-  const modal = document.getElementById('request-modal');
-  const form = document.getElementById('request-form');
-  const formWrap = document.getElementById('modal-form-wrap');
-  const success = document.getElementById('form-success');
+  const navLinks = Array.from(document.querySelectorAll('.nav-link[data-goto]'));
+  const openButtons = Array.from(document.querySelectorAll('[data-open-request]'));
+  const navToggle = document.querySelector('[data-nav-toggle]');
+  const navScrim = document.querySelector('[data-nav-close]');
+  const navMedia = window.matchMedia('(max-width: 900px)');
+  const status = document.getElementById('deck-status');
+  const skipLink = document.querySelector('[data-skip]');
+  const main = document.getElementById('main');
+
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
-  /* --- Шапка: фон при скролле ------------------------------------------- */
-
-  const onScroll = () => {
-    header.classList.toggle('is-scrolled', window.scrollY > 8);
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  /* --- Мобильное меню ---------------------------------------------------- */
-
-  const closeNav = () => {
-    document.body.classList.remove('nav-open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.setAttribute('aria-label', 'Открыть меню');
-  };
-
-  menuToggle.addEventListener('click', () => {
-    const open = document.body.classList.toggle('nav-open');
-    menuToggle.setAttribute('aria-expanded', String(open));
-    menuToggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+  const indexById = new Map(screens.map((screen, index) => [screen.id, index]));
+  const titles = screens.map((screen) => {
+    const heading = screen.querySelector('h1, h2');
+    return heading ? heading.textContent.replace(/\s+/g, ' ').trim() : screen.id;
   });
 
-  nav.addEventListener('click', (event) => {
-    if (event.target.closest('a')) closeNav();
-  });
+  let current = 0;
 
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeNav();
-  });
-
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 860) closeNav();
-  });
-
-  /* --- Модальное окно заявки -------------------------------------------- */
-
-  const openModal = () => {
-    form.reset();
-    formWrap.hidden = false;
-    success.hidden = true;
-    if (typeof modal.showModal === 'function') {
-      modal.showModal();
-    } else {
-      modal.setAttribute('open', '');
-    }
-    document.body.classList.add('modal-open');
-  };
-
-  const closeModal = () => {
-    if (typeof modal.close === 'function') modal.close();
-    else modal.removeAttribute('open');
-  };
-
-  document.querySelectorAll('[data-open-modal]').forEach((trigger) => {
-    trigger.addEventListener('click', () => {
-      closeNav();
-      openModal();
+  /* Задержка появления элементов внутри раздела */
+  screens.forEach((screen) => {
+    screen.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.setProperty('--i', String(Math.min(i, 8)));
     });
   });
 
-  document.querySelectorAll('[data-close-modal]').forEach((trigger) => {
-    trigger.addEventListener('click', closeModal);
-  });
+  const headingOf = (index) => screens[index].querySelector('h1, h2');
 
-  modal.addEventListener('click', (event) => {
-    if (event.target === modal) closeModal();
-  });
+  const focusHeading = (index) => {
+    const heading = headingOf(index);
+    if (heading) heading.focus({ preventScroll: true });
+  };
 
-  modal.addEventListener('close', () => {
-    document.body.classList.remove('modal-open');
-  });
+  const setActive = (index, { announce = true, focus = false } = {}) => {
+    const next = (index + screens.length) % screens.length;
+    current = next;
 
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
+    /* Если фокус был внутри уходящего раздела (например, на кнопке CTA),
+       переносим его в новый раздел — иначе aria-hidden получит фокус. */
+    const focusedScreen = document.activeElement && document.activeElement.closest
+      ? document.activeElement.closest('.screen')
+      : null;
+    const moveFocus = Boolean(focusedScreen) && focusedScreen !== screens[next];
+
+    screens.forEach((screen, i) => {
+      const isActive = i === next;
+      screen.classList.toggle('is-active', isActive);
+      screen.inert = !isActive;
+      if (isActive) screen.removeAttribute('aria-hidden');
+      else screen.setAttribute('aria-hidden', 'true');
+      if (isActive && screen.scrollTop) screen.scrollTop = 0;
+    });
+
+    navLinks.forEach((link) => {
+      if (link.dataset.goto === screens[next].id) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+
+    if (announce && status) {
+      status.textContent = `Раздел ${next + 1} из ${screens.length}: ${titles[next]}`;
     }
-    formWrap.hidden = true;
-    success.hidden = false;
-    modal.scrollTop = 0;
+
+    if (focus || moveFocus) focusHeading(next);
+
+    const activeLink = navLinks.find((link) => link.dataset.goto === screens[next].id);
+    if (activeLink && nav && nav.scrollWidth > nav.clientWidth) {
+      activeLink.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+  };
+
+  const showId = (id, options = {}) => {
+    const index = indexById.get(id);
+    if (index === undefined) return false;
+    setActive(index, options);
+    return true;
+  };
+
+  const navigate = (id, options = {}) => {
+    showId(id, options);
+    if (window.location.hash !== `#${id}`) {
+      window.history.pushState({ screen: id }, '', `#${id}`);
+    }
+  };
+
+  /* --- Меню на телефоне -------------------------------------------------- */
+
+  let navOpen = false;
+
+  const syncNavMode = () => {
+    if (!nav) return;
+    nav.inert = navMedia.matches && !navOpen;
+
+    if (!navMedia.matches && navOpen) {
+      navOpen = false;
+      nav.classList.remove('is-open');
+      document.body.classList.remove('nav-open');
+      if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+      if (navScrim) navScrim.classList.remove('is-open');
+    }
+  };
+
+  const setMenu = (open, { moveFocus = false } = {}) => {
+    if (!nav || !navToggle) return;
+
+    navOpen = Boolean(open) && navMedia.matches;
+    nav.classList.toggle('is-open', navOpen);
+    navToggle.setAttribute('aria-expanded', String(navOpen));
+    navToggle.setAttribute('aria-label', navOpen ? 'Закрыть меню разделов' : 'Открыть меню разделов');
+    if (navScrim) navScrim.classList.toggle('is-open', navOpen);
+    document.body.classList.toggle('nav-open', navOpen);
+    syncNavMode();
+
+    if (!moveFocus) return;
+
+    if (navOpen) {
+      const active = nav.querySelector('.nav-link[aria-current="page"]') || nav.querySelector('.nav-link');
+      if (active) active.focus({ preventScroll: true });
+    } else {
+      navToggle.focus({ preventScroll: true });
+    }
+  };
+
+  if (navToggle) {
+    navToggle.addEventListener('click', () => setMenu(!navOpen, { moveFocus: true }));
+  }
+
+  if (navScrim) {
+    navScrim.addEventListener('click', () => setMenu(false, { moveFocus: true }));
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || !navOpen) return;
+    setMenu(false, { moveFocus: true });
   });
 
-  /* --- Появление блоков при прокрутке ----------------------------------- */
+  if (navMedia.addEventListener) {
+    navMedia.addEventListener('change', () => setMenu(false));
+  } else if (navMedia.addListener) {
+    navMedia.addListener(() => setMenu(false));
+  }
 
-  const revealItems = document.querySelectorAll('.reveal');
+  syncNavMode();
 
-  if (reduceMotion || !('IntersectionObserver' in window)) {
-    revealItems.forEach((item) => item.classList.add('is-in'));
-  } else {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-in');
-          observer.unobserve(entry.target);
+  /* --- Переходы по ссылкам с data-goto ----------------------------------- */
+
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('[data-goto]');
+    if (!link) return;
+
+    const id = link.dataset.goto;
+    if (!indexById.has(id)) return;
+
+    event.preventDefault();
+    const wasOpen = navOpen;
+    if (wasOpen) setMenu(false);
+    navigate(id, wasOpen ? { focus: true } : {});
+  });
+
+  /* --- Кнопки «Оставить заявку» ведут в раздел с формой ------------------ */
+
+  openButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      setMenu(false);
+      navigate('request');
+
+      window.requestAnimationFrame(() => {
+        if (coarsePointer || reduceMotion) {
+          focusHeading(indexById.get('request'));
+          return;
         }
+
+        const firstField = document.querySelector('#request-form input');
+        if (firstField) firstField.focus({ preventScroll: true });
       });
-    }, { threshold: 0.16, rootMargin: '0px 0px -40px' });
+    });
+  });
 
-    revealItems.forEach((item) => observer.observe(item));
+  /* --- Клавиатура в верхней панели --------------------------------------- */
+
+  if (nav) {
+    nav.addEventListener('keydown', (event) => {
+      const links = Array.from(nav.querySelectorAll('.nav-link'));
+      const index = links.indexOf(document.activeElement);
+      if (index === -1) return;
+
+      let target = null;
+
+      if (event.key === 'ArrowRight') target = links[(index + 1) % links.length];
+      else if (event.key === 'ArrowLeft') target = links[(index - 1 + links.length) % links.length];
+      else if (event.key === 'Home') target = links[0];
+      else if (event.key === 'End') target = links[links.length - 1];
+
+      if (!target) return;
+      event.preventDefault();
+      target.focus();
+    });
   }
 
-  /* --- Мягкое свечение за курсором в главном экране ---------------------- */
+  /* --- Ссылка «Перейти к содержимому» ------------------------------------ */
 
-  const finePointer = window.matchMedia('(pointer: fine)').matches;
-
-  if (finePointer && !reduceMotion && hero) {
-    hero.addEventListener('pointermove', (event) => {
-      const rect = hero.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * 100;
-      const y = ((event.clientY - rect.top) / rect.height) * 100;
-      hero.style.setProperty('--mx', `${x}%`);
-      hero.style.setProperty('--my', `${y}%`);
-    }, { passive: true });
+  if (skipLink) {
+    skipLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      const heading = headingOf(current);
+      if (heading) heading.focus();
+      else if (main) main.focus();
+    });
   }
+
+  /* --- Кнопки назад/вперёд в браузере ------------------------------------ */
+
+  const syncFromLocation = () => {
+    const id = window.location.hash.slice(1);
+    if (indexById.has(id)) setActive(indexById.get(id));
+  };
+
+  window.addEventListener('popstate', syncFromLocation);
+  window.addEventListener('hashchange', syncFromLocation);
+
+  /* --- Свечение за курсором подключается отдельным файлом glow.js --------- */
+
+  /* --- Форма заявки ------------------------------------------------------ */
+
+  const form = document.getElementById('request-form');
+  const success = document.getElementById('form-success');
+  const successTitle = document.getElementById('success-title');
+  const resetButton = document.getElementById('form-reset');
+
+  if (form && success) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      form.hidden = true;
+      success.hidden = false;
+      if (successTitle) successTitle.focus({ preventScroll: true });
+    });
+
+    if (resetButton) {
+      resetButton.addEventListener('click', () => {
+        form.reset();
+        success.hidden = true;
+        form.hidden = false;
+
+        const firstField = form.querySelector('input');
+        if (firstField) firstField.focus({ preventScroll: true });
+      });
+    }
+  }
+
+  /* --- Стартовый раздел -------------------------------------------------- */
+
+  const initialId = window.location.hash.slice(1);
+  setActive(indexById.has(initialId) ? indexById.get(initialId) : 0, { announce: false });
 })();

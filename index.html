@@ -1,7 +1,16 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" class="no-js">
 <head>
 <meta charset="utf-8">
+<script>
+  document.documentElement.className = 'js';
+  /* Если основной скрипт не загрузился, через 2 с показываем разделы подряд. */
+  setTimeout(function () {
+    if (document.documentElement.getAttribute('data-deck') !== 'ready') {
+      document.documentElement.classList.remove('js');
+    }
+  }, 2000);
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LISTDOMEN — PR и диджитал агентство | ИП Истомина</title>
 <meta name="description" content="PR-агентство полного цикла: размещение материалов на сайтах и в соцсетях, видеоролики на заказ, аналитика информационного поля и мониторинг упоминаний.">
@@ -16,15 +25,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Unbounded:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
-<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+<noscript><style>.reveal{opacity:1;transform:none}[hidden]{display:none!important}</style></noscript>
 </head>
-<body>
+<body class="app">
 
-<a class="skip-link" href="#hero">Перейти к содержимому</a>
+<a class="skip-link" href="#main" data-skip>Перейти к содержимому</a>
 
-<header class="site-header" id="top">
+<header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="#top">
+    <a class="logo" href="#home" data-goto="home">
       <svg class="logo-mark" viewBox="0 0 185 150" aria-hidden="true" focusable="false">
         <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FF5A43"/>
         <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#FFFFFF"/>
@@ -35,216 +44,262 @@
       </span>
     </a>
 
-    <nav class="nav" id="primary-nav" aria-label="Основная навигация">
-      <a class="nav-link" href="#services">Услуги</a>
-      <a class="nav-link" href="#contacts">Контакты</a>
+    <nav class="nav" id="primary-nav" aria-label="Разделы сайта">
+      <a class="nav-link" href="#home" data-goto="home" aria-current="page">Главный экран</a>
+      <a class="nav-link" href="#services" data-goto="services">Услуги</a>
+      <a class="nav-link" href="#process" data-goto="process">Этапы работы</a>
+      <a class="nav-link" href="#portfolio" data-goto="portfolio">Портфолио</a>
+      <a class="nav-link" href="#advantages" data-goto="advantages">Преимущества</a>
+      <a class="nav-link" href="#request" data-goto="request">Форма заявки и контакты</a>
       <div class="nav-extra">
-        <a class="nav-phone" href="tel:+70000000000">+7 000 000-00-00</a>
-        <button class="btn btn--primary btn--sm" type="button" data-open-modal>Оставить заявку</button>
+        <button class="btn btn--primary" type="button" data-open-request>Оставить заявку</button>
+        <a class="nav-policy" href="privacy.html">Политика конфиденциальности</a>
       </div>
     </nav>
 
-    <div class="header-actions">
-      <a class="header-phone" href="tel:+70000000000">+7 000 000-00-00</a>
-      <button class="btn btn--primary btn--sm header-cta" type="button" data-open-modal>Оставить заявку</button>
-      <button class="menu-toggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="primary-nav">
-        <span></span><span></span>
-      </button>
-    </div>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Открыть меню разделов" data-nav-toggle>
+      <span class="nav-toggle-box" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span class="nav-toggle-text" aria-hidden="true">Меню</span>
+    </button>
   </div>
 </header>
 
-<main>
-  <section class="hero" id="hero">
-    <div class="hero-grid-bg" aria-hidden="true"></div>
-    <div class="hero-glow" aria-hidden="true"></div>
-    <div class="hero-spot" aria-hidden="true"></div>
+<button class="nav-scrim" type="button" data-nav-close aria-label="Закрыть меню" tabindex="-1"></button>
 
-    <div class="container hero-inner">
-      <div class="hero-copy">
-        <p class="eyebrow reveal">
-          <span class="eyebrow-dot" aria-hidden="true"></span>
-          PR &amp; ДИДЖИТАЛ АГЕНТСТВО
-          <span class="eyebrow-sep" aria-hidden="true">/</span>
-          ИП ИСТОМИНА
-        </p>
+<main class="deck" id="main" tabindex="-1">
 
-        <h1 class="hero-title">
-          <span class="line">Управляем</span>
-          <span class="line">тем, что</span>
-          <span class="line accent">о вас говорят</span>
-        </h1>
+  <!-- 01 / Главный экран ==================================================== -->
+  <section class="screen screen--home" id="home" aria-labelledby="home-title">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow reveal">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            PR &amp; ДИДЖИТАЛ АГЕНТСТВО
+            <span class="eyebrow-sep" aria-hidden="true">/</span>
+            ИП ИСТОМИНА
+          </p>
 
-        <p class="hero-lead">
-          Размещаем материалы на сайтах и в соцсетях, снимаем видеоролики,
-          мониторим упоминания и превращаем данные в решения.
-          Один подрядчик на весь информационный контур.
-        </p>
+          <h1 class="hero-title" id="home-title" tabindex="-1">
+            <span class="line">Управляем</span>
+            <span class="line">тем, что</span>
+            <span class="line accent">о вас говорят</span>
+          </h1>
 
-        <div class="hero-actions">
-          <button class="btn btn--primary btn--lg" type="button" data-open-modal>
-            Оставить заявку
-            <svg class="btn-arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
-              <path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <a class="link-arrow" href="#services">
-            Что мы делаем
-            <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
-              <path d="M4 10h12M12 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
+          <p class="hero-lead">
+            Размещаем материалы на сайтах и в соцсетях, снимаем видеоролики,
+            мониторим упоминания и превращаем данные в решения.
+            Один подрядчик на весь информационный контур.
+          </p>
 
-        <p class="hero-note">
-          <span class="pulse-dot" aria-hidden="true"></span>
-          Отвечаем в течение рабочего дня · NDA по запросу
-        </p>
-
-        <ul class="hero-stats">
-          <li>
-            <strong>120+</strong>
-            <span>площадок<br>для размещения</span>
-          </li>
-          <li>
-            <strong>24/7</strong>
-            <span>мониторинг<br>упоминаний</span>
-          </li>
-          <li>
-            <strong>14 дней</strong>
-            <span>от брифа<br>до запуска</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="hero-visual reveal">
-        <div class="panel-glow" aria-hidden="true"></div>
-
-        <article class="panel" aria-label="Пример панели медиамониторинга (демо-данные)">
-          <header class="panel-head">
-            <span class="panel-mark" aria-hidden="true"></span>
-            <span class="panel-title">Медиамониторинг</span>
-            <span class="live"><span class="live-dot" aria-hidden="true"></span>LIVE</span>
-            <span class="panel-period">7 дней</span>
-          </header>
-
-          <div class="panel-metric">
-            <div>
-              <span class="metric-label">Упоминания за неделю</span>
-              <span class="metric-value">1&nbsp;248</span>
-            </div>
-            <span class="metric-delta">
-              <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">
-                <path d="M6 10V2M2.5 5.5L6 2l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <div class="hero-actions">
+            <button class="btn btn--primary btn--lg" type="button" data-open-request>
+              Оставить заявку
+              <svg class="btn-arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              18,4%
-            </span>
+            </button>
+            <a class="link-arrow" href="#services" data-goto="services">
+              Что мы делаем
+              <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path d="M4 10h12M12 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
 
-          <div class="chart" aria-hidden="true">
-            <svg viewBox="0 0 520 140" preserveAspectRatio="none" focusable="false">
-              <defs>
-                <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#FF5A43" stop-opacity=".32"/>
-                  <stop offset="100%" stop-color="#FF5A43" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <g stroke="rgba(255,255,255,.06)" stroke-width="1">
-                <line x1="0" y1="20" x2="520" y2="20"/>
-                <line x1="0" y1="60" x2="520" y2="60"/>
-                <line x1="0" y1="100" x2="520" y2="100"/>
-                <line x1="0" y1="132" x2="520" y2="132"/>
-              </g>
-              <path d="M0 108 C25 100 42 112 68 94 C94 76 108 88 134 80 C160 72 174 94 200 72 C226 50 240 64 266 57 C292 50 306 68 332 44 C358 20 372 40 398 32 C424 24 438 46 464 28 C490 10 504 24 520 16 L520 140 L0 140 Z" fill="url(#chartFill)"/>
-              <path d="M0 108 C25 100 42 112 68 94 C94 76 108 88 134 80 C160 72 174 94 200 72 C226 50 240 64 266 57 C292 50 306 68 332 44 C358 20 372 40 398 32 C424 24 438 46 464 28 C490 10 504 24 520 16" fill="none" stroke="#FF5A43" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="464" cy="28" r="9" fill="#FF5A43" fill-opacity=".16"/>
-              <circle cx="464" cy="28" r="3.5" fill="#FF5A43"/>
-            </svg>
-            <div class="chart-axis">
-              <span>ПН</span><span>СР</span><span>ПТ</span><span>ВС</span>
-            </div>
-          </div>
+          <p class="hero-note">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            Отвечаем в течение рабочего дня · NDA по запросу
+          </p>
 
-          <div class="tone">
-            <div class="tone-row">
-              <span>Позитив</span>
-              <span class="tone-bar"><i style="width:62%"></i></span>
-              <b>62%</b>
-            </div>
-            <div class="tone-row">
-              <span>Нейтрально</span>
-              <span class="tone-bar"><i class="neutral" style="width:31%"></i></span>
-              <b>31%</b>
-            </div>
-            <div class="tone-row">
-              <span>Негатив</span>
-              <span class="tone-bar"><i class="negative" style="width:7%"></i></span>
-              <b>7%</b>
-            </div>
-          </div>
-
-          <ul class="feed">
+          <ul class="hero-stats">
             <li>
-              <span class="tag">СМИ</span>
-              <p>Отраслевое издание: обзор рынка</p>
-              <time datetime="12:40">12:40</time>
+              <strong>120+</strong>
+              <span>площадок <br>для размещения</span>
             </li>
             <li>
-              <span class="tag">TG</span>
-              <p>Telegram-канал: упоминание в подборке</p>
-              <time datetime="11:15">11:15</time>
+              <strong>24/7</strong>
+              <span>мониторинг <br>упоминаний</span>
             </li>
             <li>
-              <span class="tag">YT</span>
-              <p>YouTube: обзор с интеграцией</p>
-              <time datetime="09:02">09:02</time>
+              <strong>14 дней</strong>
+              <span>от брифа <br>до запуска</span>
             </li>
           </ul>
+        </div>
 
-          <footer class="panel-foot">
-            <span>Демо-данные</span>
-            <span>обновлено 2 мин назад</span>
-          </footer>
-        </article>
+        <div class="hero-visual reveal">
+          <article class="panel" aria-label="Пример панели медиамониторинга (демо-данные)">
+            <header class="panel-head">
+              <span class="panel-mark" aria-hidden="true"></span>
+              <span class="panel-title">Медиамониторинг</span>
+              <span class="live"><span class="live-dot" aria-hidden="true"></span>LIVE</span>
+              <span class="panel-period">7 дней</span>
+            </header>
 
-        <article class="float-card" aria-label="Видеопродакшн">
-          <span class="play" aria-hidden="true">
-            <svg viewBox="0 0 16 16" focusable="false"><path d="M5 3.5 12 8l-7 4.5z" fill="currentColor"/></svg>
-          </span>
-          <div class="float-text">
-            <span class="float-label">VIDEO / 9:16</span>
-            <strong>Ролик для соцсетей</strong>
-            <span class="float-meta">сценарий → съёмка → монтаж</span>
-          </div>
-        </article>
+            <div class="panel-metric">
+              <div>
+                <span class="metric-label">Упоминания за неделю</span>
+                <span class="metric-value">1&nbsp;248</span>
+              </div>
+              <span class="metric-delta">
+                <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+                  <path d="M6 10V2M2.5 5.5L6 2l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                18,4%
+              </span>
+            </div>
+
+            <div class="chart" aria-hidden="true">
+              <svg viewBox="0 0 520 140" preserveAspectRatio="none" focusable="false">
+                <defs>
+                  <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#FF5A43" stop-opacity=".32"/>
+                    <stop offset="100%" stop-color="#FF5A43" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <g stroke="rgba(255,255,255,.06)" stroke-width="1">
+                  <line x1="0" y1="20" x2="520" y2="20"/>
+                  <line x1="0" y1="60" x2="520" y2="60"/>
+                  <line x1="0" y1="100" x2="520" y2="100"/>
+                  <line x1="0" y1="132" x2="520" y2="132"/>
+                </g>
+                <path d="M0 108 C25 100 42 112 68 94 C94 76 108 88 134 80 C160 72 174 94 200 72 C226 50 240 64 266 57 C292 50 306 68 332 44 C358 20 372 40 398 32 C424 24 438 46 464 28 C490 10 504 24 520 16 L520 140 L0 140 Z" fill="url(#chartFill)"/>
+                <path d="M0 108 C25 100 42 112 68 94 C94 76 108 88 134 80 C160 72 174 94 200 72 C226 50 240 64 266 57 C292 50 306 68 332 44 C358 20 372 40 398 32 C424 24 438 46 464 28 C490 10 504 24 520 16" fill="none" stroke="#FF5A43" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="464" cy="28" r="9" fill="#FF5A43" fill-opacity=".16"/>
+                <circle cx="464" cy="28" r="3.5" fill="#FF5A43"/>
+              </svg>
+              <div class="chart-axis">
+                <span>ПН</span><span>СР</span><span>ПТ</span><span>ВС</span>
+              </div>
+            </div>
+
+            <div class="tone">
+              <div class="tone-row">
+                <span>Позитив</span>
+                <span class="tone-bar"><i style="width:62%"></i></span>
+                <b>62%</b>
+              </div>
+              <div class="tone-row">
+                <span>Нейтрально</span>
+                <span class="tone-bar"><i class="neutral" style="width:31%"></i></span>
+                <b>31%</b>
+              </div>
+              <div class="tone-row">
+                <span>Негатив</span>
+                <span class="tone-bar"><i class="negative" style="width:7%"></i></span>
+                <b>7%</b>
+              </div>
+            </div>
+
+            <ul class="feed">
+              <li>
+                <span class="tag">СМИ</span>
+                <p>Отраслевое издание: обзор рынка</p>
+                <time datetime="12:40">12:40</time>
+              </li>
+              <li>
+                <span class="tag">TG</span>
+                <p>Telegram-канал: упоминание в подборке</p>
+                <time datetime="11:15">11:15</time>
+              </li>
+            </ul>
+
+            <footer class="panel-foot">
+              <span>Демо-данные</span>
+              <span>обновлено 2 мин назад</span>
+            </footer>
+          </article>
+
+          <article class="float-card" aria-label="Видеопродакшн">
+            <span class="play" aria-hidden="true">
+              <svg viewBox="0 0 16 16" focusable="false"><path d="M5 3.5 12 8l-7 4.5z" fill="currentColor"/></svg>
+            </span>
+            <div class="float-text">
+              <span class="float-label">VIDEO / 9:16</span>
+              <strong>Ролик для соцсетей</strong>
+              <span class="float-meta">сценарий → съёмка → монтаж</span>
+            </div>
+          </article>
+        </div>
       </div>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span class="marquee-item">Размещение на сайтах</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Соцсети и Telegram</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Видеоролики</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Аналитика</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Мониторинг</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Кризисные коммуникации</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Размещение на сайтах</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Соцсети и Telegram</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Видеоролики</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Аналитика</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Мониторинг</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Кризисные коммуникации</span><span class="marquee-dot"></span>
+        </div>
+      </div>
+      <p class="sr-only">Размещение на сайтах, соцсети и Telegram, видеоролики, аналитика, мониторинг, кризисные коммуникации.</p>
     </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="logo" href="#home" data-goto="home">
+              <svg class="logo-mark" viewBox="0 0 185 150" aria-hidden="true" focusable="false">
+                <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FF5A43"/>
+                <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#FFFFFF"/>
+              </svg>
+              <span class="logo-text">
+                <span class="logo-name">LISTDOMEN</span>
+                <span class="logo-descr">PR &amp; ДИДЖИТАЛ АГЕНТСТВО</span>
+              </span>
+            </a>
+            <p class="footer-tagline">Управляем тем, что о вас говорят.</p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Контакты</h2>
+            <a href="mailto:hello@listdomen.ru">hello@listdomen.ru</a>
+            <a href="tel:+70000000000">+7 000 000-00-00</a>
+            <a href="https://t.me/listdomen" target="_blank" rel="noopener">Telegram · @listdomen</a>
+            <p>Москва · работаем по всей России</p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Реквизиты</h2>
+            <p>
+              ИП Истомина<br>
+              ИНН 000000000000<br>
+              ОГРНИП 000000000000000
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Документы</h2>
+            <a href="privacy.html">Политика конфиденциальности</a>
+            <button class="linklike" type="button" data-open-request>Оставить заявку</button>
+            <a href="#home" data-goto="home">Наверх ↑</a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 LISTDOMEN · ИП Истомина</span>
+          <span>Учебный прототип. Реквизиты, контакты и цифры — заглушки.</span>
+        </div>
+      </div>
+    </footer>
   </section>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span class="marquee-item">Размещение на сайтах</span><span class="marquee-dot"></span>
-      <span class="marquee-item">Соцсети и Telegram</span><span class="marquee-dot"></span>
-      <span class="marquee-item">Видеоролики</span><span class="marquee-dot"></span>
-      <span class="marquee-item">Аналитика</span><span class="marquee-dot"></span>
-      <span class="marquee-item">Мониторинг</span><span class="marquee-dot"></span>
-      <span class="marquee-item">Кризисные коммуникации</span><span class="marquee-dot"></span>
-      <span class="marquee-item">Размещение на сайтах</span><span class="marquee-dot"></span>
-      <span class="marquee-item">Соцсети и Telegram</span><span class="marquee-dot"></span>
-      <span class="marquee-item">Видеоролики</span><span class="marquee-dot"></span>
-      <span class="marquee-item">Аналитика</span><span class="marquee-dot"></span>
-      <span class="marquee-item">Мониторинг</span><span class="marquee-dot"></span>
-      <span class="marquee-item">Кризисные коммуникации</span><span class="marquee-dot"></span>
-    </div>
-  </div>
-  <p class="sr-only">Размещение на сайтах, соцсети и Telegram, видеоролики, аналитика, мониторинг, кризисные коммуникации.</p>
-
-  <section class="services" id="services">
+  <!-- 02 / Услуги =========================================================== -->
+  <section class="screen screen--services" id="services" aria-labelledby="services-title">
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow reveal"><span class="eyebrow-dot" aria-hidden="true"></span>01 / УСЛУГИ</p>
-          <h2 class="reveal">Один подрядчик<br>на весь информационный контур</h2>
+          <p class="eyebrow reveal"><span class="eyebrow-dot" aria-hidden="true"></span>УСЛУГИ</p>
+          <h2 id="services-title" tabindex="-1" class="reveal">Один подрядчик<br> <span class="accent">на весь контур</span></h2>
         </div>
         <p class="section-note reveal">
           Берём на себя размещение, производство контента
@@ -313,7 +368,7 @@
 
       <div class="services-foot reveal">
         <p>Нужен план под конкретную задачу? Соберём предложение в течение двух дней.</p>
-        <button class="btn btn--ghost" type="button" data-open-modal>
+        <button class="btn btn--ghost" type="button" data-open-request>
           Обсудить проект
           <svg class="btn-arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
             <path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -321,131 +376,572 @@
         </button>
       </div>
     </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="logo" href="#home" data-goto="home">
+              <svg class="logo-mark" viewBox="0 0 185 150" aria-hidden="true" focusable="false">
+                <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FF5A43"/>
+                <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#FFFFFF"/>
+              </svg>
+              <span class="logo-text">
+                <span class="logo-name">LISTDOMEN</span>
+                <span class="logo-descr">PR &amp; ДИДЖИТАЛ АГЕНТСТВО</span>
+              </span>
+            </a>
+            <p class="footer-tagline">Управляем тем, что о вас говорят.</p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Контакты</h2>
+            <a href="mailto:hello@listdomen.ru">hello@listdomen.ru</a>
+            <a href="tel:+70000000000">+7 000 000-00-00</a>
+            <a href="https://t.me/listdomen" target="_blank" rel="noopener">Telegram · @listdomen</a>
+            <p>Москва · работаем по всей России</p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Реквизиты</h2>
+            <p>
+              ИП Истомина<br>
+              ИНН 000000000000<br>
+              ОГРНИП 000000000000000
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Документы</h2>
+            <a href="privacy.html">Политика конфиденциальности</a>
+            <button class="linklike" type="button" data-open-request>Оставить заявку</button>
+            <a href="#home" data-goto="home">Наверх ↑</a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 LISTDOMEN · ИП Истомина</span>
+          <span>Учебный прототип. Реквизиты, контакты и цифры — заглушки.</span>
+        </div>
+      </div>
+    </footer>
   </section>
-</main>
 
-<footer class="site-footer" id="contacts">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a class="logo" href="#top">
-          <svg class="logo-mark" viewBox="0 0 185 150" aria-hidden="true" focusable="false">
-            <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FF5A43"/>
-            <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#FFFFFF"/>
-          </svg>
-          <span class="logo-text">
-            <span class="logo-name">LISTDOMEN</span>
-            <span class="logo-descr">PR &amp; ДИДЖИТАЛ АГЕНТСТВО</span>
-          </span>
-        </a>
-        <p class="footer-tagline">Управляем тем, что о вас говорят.</p>
-      </div>
-
-      <div class="footer-col">
-        <h3>Контакты</h3>
-        <a href="mailto:hello@listdomen.ru">hello@listdomen.ru</a>
-        <a href="tel:+70000000000">+7 000 000-00-00</a>
-        <p>Москва · работаем по всей России</p>
-      </div>
-
-      <div class="footer-col">
-        <h3>Реквизиты</h3>
-        <p>
-          ИП Истомина<br>
-          ИНН 000000000000<br>
-          ОГРНИП 000000000000000
+  <!-- 03 / Этапы работы ===================================================== -->
+  <section class="screen screen--process" id="process" aria-labelledby="process-title">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow reveal"><span class="eyebrow-dot" aria-hidden="true"></span>ЭТАПЫ РАБОТЫ</p>
+          <h2 id="process-title" tabindex="-1" class="reveal">От брифа до отчёта —<br> <span class="accent">понятный процесс</span></h2>
+        </div>
+        <p class="section-note reveal">
+          На каждом этапе видно, что происходит и что нужно от вас.
+          Сроки фиксируем до старта.
         </p>
       </div>
 
-      <div class="footer-col">
-        <h3>Документы</h3>
-        <a href="privacy.html">Политика конфиденциальности</a>
-        <button class="linklike" type="button" data-open-modal>Оставить заявку</button>
+      <ol class="steps">
+        <li class="step reveal">
+          <span class="step-num">01</span>
+          <h3>Бриф и аудит</h3>
+          <p>Разбираем задачу, изучаем информационное поле и конкурентов. Фиксируем цели и метрики.</p>
+          <span class="step-time">2–3 дня</span>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">02</span>
+          <h3>Стратегия и медиаплан</h3>
+          <p>Собираем площадки, форматы и смету. Согласуем план, календарь и бюджет.</p>
+          <span class="step-time">3–5 дней</span>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">03</span>
+          <h3>Производство и размещение</h3>
+          <p>Готовим тексты и видео, согласовываем материалы, выходим на площадки и держим сроки.</p>
+          <span class="step-time">5–10 дней</span>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">04</span>
+          <h3>Аналитика и отчёт</h3>
+          <p>Считаем охваты, упоминания и тональность. Показываем результат и предлагаем следующие шаги.</p>
+          <span class="step-time">еженедельно</span>
+        </li>
+      </ol>
+
+      <div class="screen-foot reveal">
+        <p>Сроки и смету фиксируем до старта — без скрытых этапов и доплат.</p>
+        <a class="link-arrow" href="#request" data-goto="request">
+          Обсудить сроки
+          <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+            <path d="M4 10h12M12 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
       </div>
     </div>
 
-    <div class="footer-bottom">
-      <span>© 2026 LISTDOMEN · ИП Истомина</span>
-      <span>Учебный прототип. Реквизиты, контакты и цифры — заглушки.</span>
-    </div>
-  </div>
-</footer>
-
-<dialog class="modal" id="request-modal" aria-labelledby="modal-title">
-  <div class="modal-inner">
-    <button class="modal-close" type="button" data-close-modal aria-label="Закрыть">
-      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-        <path d="M3 3l10 10M13 3L3 13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      </svg>
-    </button>
-
-    <div class="modal-form-wrap" id="modal-form-wrap">
-      <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>ЗАЯВКА</p>
-      <h2 id="modal-title">Расскажите о задаче</h2>
-      <p class="modal-lead">Ответим в течение рабочего дня, предложим формат и вилку бюджета. Без рассылок и навязчивых звонков.</p>
-
-      <form class="request-form" id="request-form" action="#" method="post">
-        <div class="form-row">
-          <div class="field">
-            <label for="f-name">Имя <span aria-hidden="true">*</span></label>
-            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться" required>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="logo" href="#home" data-goto="home">
+              <svg class="logo-mark" viewBox="0 0 185 150" aria-hidden="true" focusable="false">
+                <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FF5A43"/>
+                <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#FFFFFF"/>
+              </svg>
+              <span class="logo-text">
+                <span class="logo-name">LISTDOMEN</span>
+                <span class="logo-descr">PR &amp; ДИДЖИТАЛ АГЕНТСТВО</span>
+              </span>
+            </a>
+            <p class="footer-tagline">Управляем тем, что о вас говорят.</p>
           </div>
-          <div class="field">
-            <label for="f-contact">Почта или телефон <span aria-hidden="true">*</span></label>
-            <input id="f-contact" name="contact" type="text" autocomplete="email" placeholder="name@company.ru" required>
-          </div>
-        </div>
 
-        <div class="form-row">
-          <div class="field">
-            <label for="f-company">Компания</label>
-            <input id="f-company" name="company" type="text" autocomplete="organization" placeholder="Необязательно">
+          <div class="footer-col">
+            <h2>Контакты</h2>
+            <a href="mailto:hello@listdomen.ru">hello@listdomen.ru</a>
+            <a href="tel:+70000000000">+7 000 000-00-00</a>
+            <a href="https://t.me/listdomen" target="_blank" rel="noopener">Telegram · @listdomen</a>
+            <p>Москва · работаем по всей России</p>
           </div>
-          <div class="field">
-            <label for="f-service">Задача</label>
-            <select id="f-service" name="service">
-              <option value="placement">Размещение материалов</option>
-              <option value="video">Видеоролик</option>
-              <option value="analytics">Аналитика и мониторинг</option>
-              <option value="complex">Комплексная кампания</option>
-              <option value="other">Другое</option>
-            </select>
+
+          <div class="footer-col">
+            <h2>Реквизиты</h2>
+            <p>
+              ИП Истомина<br>
+              ИНН 000000000000<br>
+              ОГРНИП 000000000000000
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Документы</h2>
+            <a href="privacy.html">Политика конфиденциальности</a>
+            <button class="linklike" type="button" data-open-request>Оставить заявку</button>
+            <a href="#home" data-goto="home">Наверх ↑</a>
           </div>
         </div>
 
-        <div class="field">
-          <label for="f-message">Коротко о проекте</label>
-          <textarea id="f-message" name="message" rows="3" placeholder="Задача, сроки, площадки — в свободной форме"></textarea>
+        <div class="footer-bottom">
+          <span>© 2026 LISTDOMEN · ИП Истомина</span>
+          <span>Учебный прототип. Реквизиты, контакты и цифры — заглушки.</span>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+  <!-- 04 / Портфолио ======================================================== -->
+  <section class="screen screen--portfolio" id="portfolio" aria-labelledby="portfolio-title">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow reveal"><span class="eyebrow-dot" aria-hidden="true"></span>ПОРТФОЛИО</p>
+          <h2 id="portfolio-title" tabindex="-1" class="reveal">Форматы, с которыми<br> <span class="accent">мы работаем</span></h2>
+        </div>
+        <p class="section-note reveal">
+          Ниже — демонстрационные кейсы-заглушки: названия, цифры и результаты условные,
+          добавлены для оценки структуры.
+        </p>
+      </div>
+
+      <div class="case-grid">
+        <article class="case reveal">
+          <div class="case-visual case-visual--media">
+            <span class="case-demo">демо</span>
+            <span class="case-ghost" aria-hidden="true">01</span>
+            <span class="case-shape" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="case-type">Медиа</span>
+          </div>
+          <div class="case-body">
+            <p class="case-meta">Размещение · B2B</p>
+            <h3>Запуск в отраслевых СМИ</h3>
+            <p>Серия экспертных колонок и интервью для выхода в профессиональную повестку.</p>
+            <div class="case-stats">
+              <div><strong>24</strong><span>площадки</span></div>
+              <div><strong>1,8 млн</strong><span>охват</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="case reveal">
+          <div class="case-visual case-visual--video">
+            <span class="case-demo">демо</span>
+            <span class="case-ghost" aria-hidden="true">02</span>
+            <span class="case-shape" aria-hidden="true"><i></i></span>
+            <span class="case-type">Видео</span>
+          </div>
+          <div class="case-body">
+            <p class="case-meta">Продакшн · Запуск</p>
+            <h3>Видеосерия для соцсетей</h3>
+            <p>12 вертикальных роликов: сценарий, съёмка, монтаж и адаптации под площадки.</p>
+            <div class="case-stats">
+              <div><strong>12</strong><span>роликов</span></div>
+              <div><strong>640 тыс.</strong><span>просмотров</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="case reveal">
+          <div class="case-visual case-visual--data">
+            <span class="case-demo">демо</span>
+            <span class="case-ghost" aria-hidden="true">03</span>
+            <span class="case-shape" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="case-type">Данные</span>
+          </div>
+          <div class="case-body">
+            <p class="case-meta">Мониторинг · Репутация</p>
+            <h3>Мониторинг сети клиник</h3>
+            <p>Ежедневный сбор упоминаний, тональности и алерты по критичным сообщениям.</p>
+            <div class="case-stats">
+              <div><strong>3 200</strong><span>упоминаний</span></div>
+              <div><strong>92%</strong><span>нейтрально+</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="case reveal">
+          <div class="case-visual case-visual--crisis">
+            <span class="case-demo">демо</span>
+            <span class="case-ghost" aria-hidden="true">04</span>
+            <span class="case-shape" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="case-type">PR</span>
+          </div>
+          <div class="case-body">
+            <p class="case-meta">PR · Кризис</p>
+            <h3>Антикризисный сценарий</h3>
+            <p>Протокол реагирования, тезисы для spokesperson и работа с повесткой в моменте.</p>
+            <div class="case-stats">
+              <div><strong>6 часов</strong><span>до первого ответа</span></div>
+              <div><strong>4</strong><span>канала</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="logo" href="#home" data-goto="home">
+              <svg class="logo-mark" viewBox="0 0 185 150" aria-hidden="true" focusable="false">
+                <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FF5A43"/>
+                <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#FFFFFF"/>
+              </svg>
+              <span class="logo-text">
+                <span class="logo-name">LISTDOMEN</span>
+                <span class="logo-descr">PR &amp; ДИДЖИТАЛ АГЕНТСТВО</span>
+              </span>
+            </a>
+            <p class="footer-tagline">Управляем тем, что о вас говорят.</p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Контакты</h2>
+            <a href="mailto:hello@listdomen.ru">hello@listdomen.ru</a>
+            <a href="tel:+70000000000">+7 000 000-00-00</a>
+            <a href="https://t.me/listdomen" target="_blank" rel="noopener">Telegram · @listdomen</a>
+            <p>Москва · работаем по всей России</p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Реквизиты</h2>
+            <p>
+              ИП Истомина<br>
+              ИНН 000000000000<br>
+              ОГРНИП 000000000000000
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Документы</h2>
+            <a href="privacy.html">Политика конфиденциальности</a>
+            <button class="linklike" type="button" data-open-request>Оставить заявку</button>
+            <a href="#home" data-goto="home">Наверх ↑</a>
+          </div>
         </div>
 
-        <label class="consent">
-          <input type="checkbox" name="consent" required>
-          <span>Согласен на обработку персональных данных в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a>.</span>
-        </label>
+        <div class="footer-bottom">
+          <span>© 2026 LISTDOMEN · ИП Истомина</span>
+          <span>Учебный прототип. Реквизиты, контакты и цифры — заглушки.</span>
+        </div>
+      </div>
+    </footer>
+  </section>
 
-        <button class="btn btn--primary btn--wide" type="submit">
-          Отправить заявку
-          <svg class="btn-arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
-            <path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <p class="form-note">Демо-форма: в прототипе данные никуда не отправляются.</p>
-      </form>
+  <!-- 05 / Преимущества ===================================================== -->
+  <section class="screen screen--advantages" id="advantages" aria-labelledby="advantages-title">
+    <div class="container adv-grid">
+      <div class="adv-copy">
+        <p class="eyebrow reveal"><span class="eyebrow-dot" aria-hidden="true"></span>ПРЕИМУЩЕСТВА</p>
+        <h2 id="advantages-title" tabindex="-1" class="reveal">Спокойно закрываем весь<br> <span class="accent">информационный контур</span></h2>
+        <p class="reveal">
+          Не нужно сводить между собой агентство, продакшн и аналитиков.
+          Одна команда отвечает за смысл, производство, размещение и цифры.
+        </p>
+
+        <div class="adv-facts reveal" aria-label="Ключевые цифры">
+          <div class="adv-fact">
+            <strong>4</strong>
+            <span>направления<br>в одной команде</span>
+          </div>
+          <div class="adv-fact">
+            <strong>14</strong>
+            <span>дней<br>до запуска</span>
+          </div>
+          <div class="adv-fact">
+            <strong>24/7</strong>
+            <span>мониторинг<br>упоминаний</span>
+          </div>
+        </div>
+
+        <button class="btn btn--ghost reveal" type="button" data-open-request>Обсудить проект</button>
+      </div>
+
+      <ul class="adv-list">
+        <li class="adv-item reveal">
+          <span class="adv-num">01</span>
+          <div>
+            <h3>Один подрядчик</h3>
+            <p>Стратегия, контент, размещение и аналитика — в одном месте и на одном договоре.</p>
+          </div>
+        </li>
+        <li class="adv-item reveal">
+          <span class="adv-num">02</span>
+          <div>
+            <h3>Прозрачная смета</h3>
+            <p>Фиксируем стоимость площадок и работ до запуска. Видно, за что платит клиент.</p>
+          </div>
+        </li>
+        <li class="adv-item reveal">
+          <span class="adv-num">03</span>
+          <div>
+            <h3>Скорость запуска</h3>
+            <p>От брифа до первой публикации — в среднем 14 дней. Срочные форматы — от 48 часов.</p>
+          </div>
+        </li>
+        <li class="adv-item reveal">
+          <span class="adv-num">04</span>
+          <div>
+            <h3>Отчётность в цифрах</h3>
+            <p>Охваты, упоминания, тональность и переходы — в одном отчёте, без «работы ради работы».</p>
+          </div>
+        </li>
+      </ul>
     </div>
 
-    <div class="form-success" id="form-success" hidden role="status" aria-live="polite">
-      <span class="success-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" focusable="false">
-          <path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
-      <h2>Заявка отправлена</h2>
-      <p>Спасибо! В рабочей версии сайта заявка уйдёт менеджеру, и мы ответим в течение рабочего дня. Это учебный прототип — данные не отправлялись.</p>
-      <button class="btn btn--ghost" type="button" data-close-modal>Вернуться на сайт</button>
-    </div>
-  </div>
-</dialog>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="logo" href="#home" data-goto="home">
+              <svg class="logo-mark" viewBox="0 0 185 150" aria-hidden="true" focusable="false">
+                <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FF5A43"/>
+                <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#FFFFFF"/>
+              </svg>
+              <span class="logo-text">
+                <span class="logo-name">LISTDOMEN</span>
+                <span class="logo-descr">PR &amp; ДИДЖИТАЛ АГЕНТСТВО</span>
+              </span>
+            </a>
+            <p class="footer-tagline">Управляем тем, что о вас говорят.</p>
+          </div>
 
+          <div class="footer-col">
+            <h2>Контакты</h2>
+            <a href="mailto:hello@listdomen.ru">hello@listdomen.ru</a>
+            <a href="tel:+70000000000">+7 000 000-00-00</a>
+            <a href="https://t.me/listdomen" target="_blank" rel="noopener">Telegram · @listdomen</a>
+            <p>Москва · работаем по всей России</p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Реквизиты</h2>
+            <p>
+              ИП Истомина<br>
+              ИНН 000000000000<br>
+              ОГРНИП 000000000000000
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Документы</h2>
+            <a href="privacy.html">Политика конфиденциальности</a>
+            <button class="linklike" type="button" data-open-request>Оставить заявку</button>
+            <a href="#home" data-goto="home">Наверх ↑</a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 LISTDOMEN · ИП Истомина</span>
+          <span>Учебный прототип. Реквизиты, контакты и цифры — заглушки.</span>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+  <!-- 06 / Форма заявки и контакты ========================================== -->
+  <section class="screen screen--request" id="request" aria-labelledby="request-title">
+    <div class="container">
+      <div class="request-grid">
+        <div class="request-copy">
+          <p class="eyebrow reveal"><span class="eyebrow-dot" aria-hidden="true"></span>ФОРМА ЗАЯВКИ И КОНТАКТЫ</p>
+          <h2 id="request-title" tabindex="-1" class="reveal">Расскажите <span class="accent">о задаче</span></h2>
+          <p class="request-lead reveal">
+            Ответим в течение рабочего дня, предложим формат и вилку бюджета.
+            NDA — по запросу.
+          </p>
+
+          <form class="request-form" id="request-form" action="#" method="post">
+            <div class="form-row">
+              <div class="field">
+                <label for="f-name">Имя <span aria-hidden="true">*</span></label>
+                <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться" required>
+              </div>
+              <div class="field">
+                <label for="f-contact">Почта или телефон <span aria-hidden="true">*</span></label>
+                <input id="f-contact" name="contact" type="text" autocomplete="email" placeholder="name@company.ru" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="f-company">Компания</label>
+                <input id="f-company" name="company" type="text" autocomplete="organization" placeholder="Необязательно">
+              </div>
+              <div class="field">
+                <label for="f-service">Задача</label>
+                <select id="f-service" name="service">
+                  <option value="placement">Размещение материалов</option>
+                  <option value="video">Видеоролик</option>
+                  <option value="analytics">Аналитика и мониторинг</option>
+                  <option value="complex">Комплексная кампания</option>
+                  <option value="other">Другое</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="f-message">Коротко о проекте</label>
+              <textarea id="f-message" name="message" rows="3" placeholder="Задача, сроки, площадки — в свободной форме"></textarea>
+            </div>
+
+            <label class="consent">
+              <input type="checkbox" name="consent" required>
+              <span>Согласен на обработку персональных данных в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a>.</span>
+            </label>
+
+            <button class="btn btn--primary btn--wide" type="submit">
+              Отправить заявку
+              <svg class="btn-arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <p class="form-note">Демо-форма: в прототипе данные никуда не отправляются.</p>
+          </form>
+
+          <div class="form-success" id="form-success" hidden role="status" aria-live="polite">
+            <span class="success-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <h3 tabindex="-1" id="success-title">Заявка отправлена</h3>
+            <p>Спасибо! В рабочей версии сайта заявка уйдёт менеджеру, и мы ответим в течение рабочего дня. Это учебный прототип — данные не отправлялись.</p>
+            <button class="btn btn--ghost" type="button" id="form-reset">Отправить ещё одну</button>
+          </div>
+        </div>
+
+        <aside class="contact-card reveal" aria-label="Контакты">
+          <div class="card-top">
+            <span class="contact-title">Контакты</span>
+            <a class="card-arrow" href="https://t.me/listdomen" target="_blank" rel="noopener" aria-label="Написать в Telegram">
+              <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path d="M5 15 15 5M7 5h8v8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <ul class="contact-list">
+            <li>
+              <span>Почта</span>
+              <a href="mailto:hello@listdomen.ru">hello@listdomen.ru</a>
+            </li>
+            <li>
+              <span>Телефон</span>
+              <a href="tel:+70000000000">+7 000 000-00-00</a>
+            </li>
+            <li>
+              <span>Telegram</span>
+              <a href="https://t.me/listdomen" target="_blank" rel="noopener">@listdomen</a>
+            </li>
+            <li>
+              <span>География</span>
+              <p>Москва · работаем по всей России</p>
+            </li>
+          </ul>
+
+          <p class="contact-note">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            Не передаём контакты третьим лицам
+          </p>
+        </aside>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="logo" href="#home" data-goto="home">
+              <svg class="logo-mark" viewBox="0 0 185 150" aria-hidden="true" focusable="false">
+                <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FF5A43"/>
+                <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#FFFFFF"/>
+              </svg>
+              <span class="logo-text">
+                <span class="logo-name">LISTDOMEN</span>
+                <span class="logo-descr">PR &amp; ДИДЖИТАЛ АГЕНТСТВО</span>
+              </span>
+            </a>
+            <p class="footer-tagline">Управляем тем, что о вас говорят.</p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Контакты</h2>
+            <a href="mailto:hello@listdomen.ru">hello@listdomen.ru</a>
+            <a href="tel:+70000000000">+7 000 000-00-00</a>
+            <a href="https://t.me/listdomen" target="_blank" rel="noopener">Telegram · @listdomen</a>
+            <p>Москва · работаем по всей России</p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Реквизиты</h2>
+            <p>
+              ИП Истомина<br>
+              ИНН 000000000000<br>
+              ОГРНИП 000000000000000
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h2>Документы</h2>
+            <a href="privacy.html">Политика конфиденциальности</a>
+            <button class="linklike" type="button" data-open-request>Оставить заявку</button>
+            <a href="#home" data-goto="home">Наверх ↑</a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 LISTDOMEN · ИП Истомина</span>
+          <span>Учебный прототип. Реквизиты, контакты и цифры — заглушки.</span>
+        </div>
+      </div>
+    </footer>
+  </section>
+</main>
+
+<p class="sr-only" id="deck-status" aria-live="polite"></p>
+
+<script src="assets/glow.js" defer></script>
 <script src="assets/main.js" defer></script>
 </body>
 </html>
