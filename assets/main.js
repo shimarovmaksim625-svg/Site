@@ -8,9 +8,6 @@
   const menuToggle = document.querySelector('.menu-toggle');
   const hero = document.getElementById('hero');
   const modal = document.getElementById('request-modal');
-  const form = document.getElementById('request-form');
-  const formWrap = document.getElementById('modal-form-wrap');
-  const success = document.getElementById('form-success');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* --- Шапка: фон при скролле ------------------------------------------- */
@@ -28,6 +25,10 @@
     menuToggle.setAttribute('aria-expanded', 'false');
     menuToggle.setAttribute('aria-label', 'Открыть меню');
   };
+
+  document.querySelectorAll('[data-open-account], [data-open-modal]').forEach((trigger) => {
+    trigger.addEventListener('click', closeNav);
+  });
 
   menuToggle.addEventListener('click', () => {
     const open = document.body.classList.toggle('nav-open');
@@ -49,29 +50,10 @@
 
   /* --- Модальное окно заявки -------------------------------------------- */
 
-  const openModal = () => {
-    form.reset();
-    formWrap.hidden = false;
-    success.hidden = true;
-    if (typeof modal.showModal === 'function') {
-      modal.showModal();
-    } else {
-      modal.setAttribute('open', '');
-    }
-    document.body.classList.add('modal-open');
-  };
-
   const closeModal = () => {
     if (typeof modal.close === 'function') modal.close();
     else modal.removeAttribute('open');
   };
-
-  document.querySelectorAll('[data-open-modal]').forEach((trigger) => {
-    trigger.addEventListener('click', () => {
-      closeNav();
-      openModal();
-    });
-  });
 
   document.querySelectorAll('[data-close-modal]').forEach((trigger) => {
     trigger.addEventListener('click', closeModal);
@@ -83,17 +65,6 @@
 
   modal.addEventListener('close', () => {
     document.body.classList.remove('modal-open');
-  });
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-    formWrap.hidden = true;
-    success.hidden = false;
-    modal.scrollTop = 0;
   });
 
   /* --- Появление блоков при прокрутке ----------------------------------- */

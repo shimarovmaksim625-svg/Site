@@ -177,6 +177,13 @@ ul { padding: 0; list-style: none; }
   padding: 6px 0;
   transition: color .2s ease;
 }
+.nav-link--button {
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
 
 .nav-link::after {
   content: "";
@@ -1072,6 +1079,7 @@ ul { padding: 0; list-style: none; }
 }
 
 .field { display: flex; flex-direction: column; gap: 7px; }
+.field[hidden] { display: none; }
 
 .field label {
   font-size: 9.5px;
@@ -1144,6 +1152,78 @@ ul { padding: 0; list-style: none; }
   color: #74808E;
   text-align: center;
 }
+
+.account-modal { max-width: 520px; }
+.account-modal > .modal-inner > h2 {
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.auth-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.account-form {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.account-message {
+  margin-top: 12px;
+  color: #FF9B8C;
+  font-size: 12px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.account-message[data-state="success"] { color: #9BD8B0; }
+.account-message[data-state="info"] { color: var(--muted); }
+
+.account-signout { margin-top: 18px; }
+
+.request-list-title {
+  margin-top: 30px;
+  font-family: var(--font-display);
+  font-size: 13px;
+}
+
+.request-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.request-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 12px;
+  padding: 13px 15px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: #0F1216;
+}
+
+.request-list li strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.request-list li span,
+.request-list li time {
+  color: var(--muted);
+  font-size: 10.5px;
+}
+
+.request-list li time { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
 
 .form-success {
   padding: clamp(18px, 4vw, 34px) 0 10px;

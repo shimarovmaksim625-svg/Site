@@ -38,6 +38,7 @@
     <nav class="nav" id="primary-nav" aria-label="Основная навигация">
       <a class="nav-link" href="#services">Услуги</a>
       <a class="nav-link" href="#contacts">Контакты</a>
+      <button class="nav-link nav-link--button" type="button" data-open-account>Личный кабинет</button>
       <div class="nav-extra">
         <a class="nav-phone" href="tel:+70000000000">+7 000 000-00-00</a>
         <button class="btn btn--primary btn--sm" type="button" data-open-modal>Оставить заявку</button>
@@ -388,18 +389,18 @@
         <div class="form-row">
           <div class="field">
             <label for="f-name">Имя <span aria-hidden="true">*</span></label>
-            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться" required>
+            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="120" placeholder="Как к вам обращаться" required>
           </div>
           <div class="field">
             <label for="f-contact">Почта или телефон <span aria-hidden="true">*</span></label>
-            <input id="f-contact" name="contact" type="text" autocomplete="email" placeholder="name@company.ru" required>
+            <input id="f-contact" name="contact" type="text" autocomplete="email" maxlength="200" placeholder="name@company.ru" required>
           </div>
         </div>
 
         <div class="form-row">
           <div class="field">
             <label for="f-company">Компания</label>
-            <input id="f-company" name="company" type="text" autocomplete="organization" placeholder="Необязательно">
+            <input id="f-company" name="company" type="text" autocomplete="organization" maxlength="200" placeholder="Необязательно">
           </div>
           <div class="field">
             <label for="f-service">Задача</label>
@@ -415,7 +416,7 @@
 
         <div class="field">
           <label for="f-message">Коротко о проекте</label>
-          <textarea id="f-message" name="message" rows="3" placeholder="Задача, сроки, площадки — в свободной форме"></textarea>
+          <textarea id="f-message" name="message" rows="3" maxlength="5000" placeholder="Задача, сроки, площадки — в свободной форме"></textarea>
         </div>
 
         <label class="consent">
@@ -429,7 +430,8 @@
             <path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
-        <p class="form-note">Демо-форма: в прототипе данные никуда не отправляются.</p>
+        <p class="account-message" id="request-message" role="status" aria-live="polite" hidden></p>
+        <p class="form-note">Для отправки заявки войдите или создайте аккаунт.</p>
       </form>
     </div>
 
@@ -440,12 +442,60 @@
         </svg>
       </span>
       <h2>Заявка отправлена</h2>
-      <p>Спасибо! В рабочей версии сайта заявка уйдёт менеджеру, и мы ответим в течение рабочего дня. Это учебный прототип — данные не отправлялись.</p>
+      <p>Спасибо! Заявка сохранена в вашем аккаунте. Мы ответим в течение рабочего дня.</p>
       <button class="btn btn--ghost" type="button" data-close-modal>Вернуться на сайт</button>
     </div>
   </div>
 </dialog>
 
+<dialog class="modal account-modal" id="account-modal" aria-labelledby="account-title">
+  <div class="modal-inner">
+    <button class="modal-close" type="button" data-close-account aria-label="Закрыть">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M3 3l10 10M13 3L3 13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>АККАУНТ</p>
+    <h2 id="account-title">Личный кабинет</h2>
+
+    <div id="auth-guest">
+      <p class="modal-lead">Войдите, чтобы отправлять заявки и следить за их статусом.</p>
+      <p class="account-message" id="auth-config-warning" role="alert" hidden></p>
+
+      <div class="auth-switch" role="group" aria-label="Действие с аккаунтом">
+        <button class="btn btn--primary btn--sm" type="button" data-auth-mode="login" aria-pressed="true">Войти</button>
+        <button class="btn btn--ghost btn--sm" type="button" data-auth-mode="signup" aria-pressed="false">Создать аккаунт</button>
+      </div>
+
+      <form class="account-form" id="auth-form">
+        <div class="field" id="auth-name-field" hidden>
+          <label for="auth-name">Имя <span aria-hidden="true">*</span></label>
+          <input id="auth-name" name="name" type="text" autocomplete="name" maxlength="120" placeholder="Как к вам обращаться">
+        </div>
+        <div class="field">
+          <label for="auth-email">Электронная почта <span aria-hidden="true">*</span></label>
+          <input id="auth-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="name@company.ru" required>
+        </div>
+        <div class="field">
+          <label for="auth-password">Пароль <span aria-hidden="true">*</span></label>
+          <input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="8" required>
+        </div>
+        <button class="btn btn--primary btn--wide" id="auth-submit" type="submit">Войти</button>
+        <p class="account-message" id="auth-message" role="status" aria-live="polite" hidden></p>
+      </form>
+    </div>
+
+    <section class="account-view" id="account-view" aria-labelledby="account-title" hidden>
+      <p class="modal-lead" id="account-email"></p>
+      <button class="btn btn--ghost btn--sm account-signout" id="sign-out" type="button">Выйти</button>
+      <h3 class="request-list-title">Мои заявки</h3>
+      <p class="account-message" id="request-list-message" role="status" aria-live="polite"></p>
+      <ul class="request-list" id="request-list"></ul>
+    </section>
+  </div>
+</dialog>
+
 <script src="assets/main.js" defer></script>
+<script type="module" src="assets/account.js"></script>
 </body>
 </html>
