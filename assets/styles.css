@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LISTDOMEN — учебный прототип сайта, версия 2
+   ListMedia — учебный прототип сайта, версия 2
    Структура: 6 полноэкранных разделов, переключение по верхней панели.
 
    Токены взяты из айдентики (identity/identity_minimal.svg):
@@ -354,14 +354,6 @@ html:not(.js) .screen {
 .nav-scrim { display: none; }
 
 .nav-extra { display: none; }
-
-.nav-policy {
-  font-size: 11.5px;
-  color: var(--muted);
-  text-align: center;
-  transition: color .2s ease;
-}
-.nav-policy:hover { color: var(--coral); }
 
 /* ==========================================================================
    Кнопки и ссылки
@@ -1063,7 +1055,7 @@ html:not(.js) .screen {
 .steps {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1px solid var(--line-strong);
+  gap: 14px;
 }
 
 .step {
@@ -1073,19 +1065,26 @@ html:not(.js) .screen {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: clamp(14px, 2.4vh, 24px) 22px clamp(12px, 2.2vh, 22px) 0;
-  border-right: 1px solid var(--line);
+  padding: clamp(18px, 2.6vh, 26px);
+  overflow: hidden;
+  background: linear-gradient(165deg, #1A2027 0%, #12161A 74%);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  transition: transform .35s var(--ease), border-color .3s ease, background .3s ease;
 }
-
-.step + .step { padding-left: 22px; }
-.step:last-child { padding-right: 0; border-right: 0; }
 
 .step::before {
   content: "";
   position: absolute;
-  top: -1px; left: 0;
-  width: 100%; height: 2px;
-  background: linear-gradient(90deg, var(--step-accent), transparent 88%);
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--step-accent), transparent 78%);
+}
+
+.step:hover {
+  transform: translateY(-5px);
+  border-color: var(--step-line);
+  background: linear-gradient(165deg, #1E242C 0%, #14181D 74%);
 }
 
 .step-num {
@@ -1103,7 +1102,7 @@ html:not(.js) .screen {
 }
 
 .step h3 {
-  margin-top: clamp(10px, 1.8vh, 20px);
+  margin-top: clamp(14px, 2.4vh, 26px);
   font-family: var(--font-display);
   font-size: clamp(14.5px, min(1.2vw, 2vh), 17px);
   font-weight: 700;
@@ -1112,7 +1111,7 @@ html:not(.js) .screen {
 }
 
 .step p {
-  margin-top: clamp(7px, 1vh, 10px);
+  margin-top: clamp(8px, 1.2vh, 12px);
   margin-bottom: auto;
   font-size: clamp(12px, min(.9vw, 1.55vh), 13px);
   line-height: 1.6;
@@ -1121,7 +1120,7 @@ html:not(.js) .screen {
 
 .step-time {
   width: fit-content;
-  margin-top: clamp(12px, 2vh, 18px);
+  margin-top: clamp(14px, 2.2vh, 22px);
   padding: 5px 9px;
   border: 1px solid var(--step-line);
   border-radius: 999px;
@@ -1398,20 +1397,40 @@ html:not(.js) .screen {
   color: #A6B2C0;
 }
 
-.adv-list { display: grid; }
+.adv-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
 
 .adv-item {
   --adv-accent: var(--coral);
   --adv-soft: var(--coral-soft);
   --adv-line: var(--coral-line);
-  display: grid;
-  grid-template-columns: 40px minmax(0, 1fr);
-  gap: 14px;
-  padding: clamp(12px, 2.1vh, 22px) 0;
-  border-top: 1px solid var(--line-strong);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(16px, 2.4vh, 22px);
+  overflow: hidden;
+  background: linear-gradient(165deg, #1A2027 0%, #12161A 74%);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  transition: transform .35s var(--ease), border-color .3s ease, background .3s ease;
 }
 
-.adv-item:last-child { border-bottom: 1px solid var(--line-strong); }
+.adv-item::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--adv-accent), transparent 78%);
+}
+
+.adv-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--adv-line);
+  background: linear-gradient(165deg, #1E242C 0%, #14181D 74%);
+}
 
 .adv-num {
   display: inline-grid;
@@ -1428,6 +1447,7 @@ html:not(.js) .screen {
 }
 
 .adv-item h3 {
+  margin-top: clamp(12px, 2vh, 18px);
   font-family: var(--font-display);
   font-size: clamp(14.5px, min(1.2vw, 2vh), 17px);
   font-weight: 700;
@@ -1435,7 +1455,7 @@ html:not(.js) .screen {
 }
 
 .adv-item p {
-  margin-top: clamp(5px, .8vh, 8px);
+  margin-top: clamp(6px, 1vh, 10px);
   font-size: clamp(12px, min(.9vw, 1.55vh), 13.5px);
   line-height: 1.6;
   color: #98A5B3;
@@ -1695,71 +1715,8 @@ html:not(.js) .reveal { opacity: 1; transform: none; }
 }
 
 /* ==========================================================================
-   Внутренняя страница документа (privacy.html)
+   Подвал
    ========================================================================== */
-
-.doc-back .svg,
-.doc-back svg { transform: rotate(180deg); }
-
-.doc-page {
-  padding: clamp(48px, 7vw, 92px) 0 clamp(56px, 7vw, 96px);
-  background:
-    radial-gradient(420px circle at var(--glow-x, -9999px) var(--glow-y, -9999px), rgba(255, 90, 67, .10), transparent 68%),
-    radial-gradient(760px 520px at -8% 20%, rgba(255, 90, 67, .12), transparent 62%),
-    radial-gradient(620px 420px at 104% 88%, rgba(255, 90, 67, .06), transparent 62%),
-    var(--carbon-deep);
-}
-
-.doc-layout { max-width: 800px; }
-
-.doc-page h1 {
-  margin-top: 22px;
-  font-family: var(--font-display);
-  font-size: clamp(1.9rem, 4vw, 3rem);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -.01em;
-}
-
-.doc-meta {
-  margin-top: 14px;
-  font-family: var(--font-body);
-  font-size: 11px;
-  color: var(--muted-dim);
-}
-
-.doc-content { margin-top: 40px; }
-
-.doc-content h2 {
-  margin: 32px 0 10px;
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.35;
-}
-
-.doc-content p {
-  font-size: 14.5px;
-  line-height: 1.75;
-  color: #A6B2C0;
-}
-
-.doc-content a { color: var(--coral); text-decoration: underline; text-underline-offset: 2px; }
-
-.doc-warning {
-  margin-bottom: 34px;
-  padding: 18px 20px;
-  border: 1px dashed rgba(255, 90, 67, .4);
-  border-radius: var(--radius-sm);
-  background: rgba(255, 90, 67, .06);
-  font-size: 13px !important;
-  line-height: 1.65 !important;
-  color: #D7BDB7 !important;
-}
-
-.doc-cta { margin-top: 44px; }
-
-.doc-page .link-arrow { border-bottom: 0; }
 
 .site-footer {
   flex: 0 0 auto;
@@ -2036,12 +1993,9 @@ html:not(.js) .reveal { opacity: 1; transform: none; }
   .card h3 { margin-top: 16px; }
   .card p { font-size: 12.5px; }
 
-  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .step { padding: 18px 18px 18px 0; }
-  .step + .step { padding-left: 18px; }
-  .step:nth-child(2n) { padding-right: 0; border-right: 0; }
-  .step:nth-child(2n+1) { padding-left: 0; }
-  .step:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .step { padding: 18px; }
+  .adv-list { gap: 12px; }
 
   .case-grid { gap: 12px; }
 
@@ -2104,14 +2058,14 @@ html:not(.js) .reveal { opacity: 1; transform: none; }
   .section-head h2 br,
   .adv-copy h2 br { display: none; }
 
-  .steps { grid-template-columns: 1fr; }
-  .step,
-  .step + .step,
-  .step:nth-child(2n),
-  .step:nth-child(2n+1) { padding: 16px 0; border-right: 0; }
-  .step + .step { border-top: 1px solid var(--line); }
-  .step h3 { margin-top: 8px; }
-  .step-time { margin-top: 10px; }
+  .steps { grid-template-columns: 1fr; gap: 10px; }
+  .step { padding: 16px; }
+  .step h3 { margin-top: 10px; }
+  .step-time { margin-top: 12px; }
+
+  .adv-list { grid-template-columns: 1fr; gap: 10px; }
+  .adv-item { padding: 16px; }
+  .adv-item h3 { margin-top: 10px; }
 
   .case-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .case { display: flex; }
@@ -2162,9 +2116,6 @@ html:not(.js) .reveal { opacity: 1; transform: none; }
   .adv-fact { padding: 9px 10px; }
   .contact-card { padding: 16px; }
   .contact-list li { padding-block: 9px; }
-
-  .doc-page { padding-top: 36px; }
-  .doc-page h1 { font-size: clamp(1.5rem, 7vw, 2rem); }
 }
 
 @media (max-width: 380px) {
@@ -2185,6 +2136,8 @@ html:not(.js) .reveal { opacity: 1; transform: none; }
 /* На тач-экранах убираем «залипающие» hover-подъёмы */
 @media (hover: none), (pointer: coarse) {
   .card:hover,
+  .step:hover,
+  .adv-item:hover,
   .case:hover,
   .btn--primary:hover,
   .btn--ghost:hover { transform: none; }

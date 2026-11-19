@@ -65,7 +65,7 @@
   <g id="Header" transform="translate(80, 36)">
     <!-- Brand Title -->
     <g transform="translate(0, 0)">
-      <text x="0" y="28" class="font-unbounded" font-size="28" font-weight="900" fill="#FFFFFF" letter-spacing="1">LISTDOMEN</text>
+      <text x="0" y="28" class="font-unbounded" font-size="28" font-weight="900" fill="#FFFFFF" letter-spacing="1">ListMedia</text>
       <text x="0" y="50" class="font-unbounded" font-size="11" font-weight="700" fill="#FF5A43" letter-spacing="3">PR &amp; ДИДЖИТАЛ АГЕНТСТВО</text>
     </g>
 
@@ -90,15 +90,15 @@
 
     <!-- Primary Logo Lockup (Large & Confident) -->
     <g transform="translate(50, 75)">
-      <!-- Big LD Monogram (135 x 112) -->
+      <!-- Big LM Monogram (135 x 112) -->
       <g transform="scale(0.75)">
         <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FF5A43"/>
-        <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#FFFFFF"/>
+        <path d="M95 15 H121 L130 52 L139 15 H165 V135 H141 V70 L130 104 L119 70 V135 H95 Z" fill="#FFFFFF"/>
       </g>
       <!-- Vertical Divider -->
       <line x1="160" y1="12" x2="160" y2="92" stroke="#2E3642" stroke-width="2"/>
       <!-- Text Lockup -->
-      <text x="190" y="54" class="font-unbounded" font-size="38" font-weight="900" fill="#FFFFFF" letter-spacing="0.5">LISTDOMEN</text>
+      <text x="190" y="54" class="font-unbounded" font-size="38" font-weight="900" fill="#FFFFFF" letter-spacing="0.5">ListMedia</text>
       <text x="190" y="82" class="font-unbounded" font-size="13" font-weight="700" fill="#FF5A43" letter-spacing="3">PR &amp; ДИДЖИТАЛ АГЕНТСТВО</text>
     </g>
 
@@ -109,7 +109,7 @@
         <rect width="180" height="150" rx="16" fill="#0F1114" stroke="#262D36" stroke-width="1"/>
         <g transform="translate(45, 25) scale(0.5)">
           <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FF5A43"/>
-          <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#FFFFFF"/>
+          <path d="M95 15 H121 L130 52 L139 15 H165 V135 H141 V70 L130 104 L119 70 V135 H95 Z" fill="#FFFFFF"/>
         </g>
         <text x="90" y="128" class="font-mono" font-size="11" font-weight="700" fill="#94A3B8" text-anchor="middle">Dark Carbon</text>
       </g>
@@ -119,7 +119,7 @@
         <rect width="180" height="150" rx="16" fill="#FF5A43"/>
         <g transform="translate(45, 25) scale(0.5)">
           <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FFFFFF"/>
-          <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#14171A"/>
+          <path d="M95 15 H121 L130 52 L139 15 H165 V135 H141 V70 L130 104 L119 70 V135 H95 Z" fill="#14171A"/>
         </g>
         <text x="90" y="128" class="font-mono" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">Media Coral</text>
       </g>
@@ -131,10 +131,10 @@
           <!-- Monogram on light -->
           <g transform="scale(0.55)">
             <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FF5A43"/>
-            <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#14171A"/>
+            <path d="M95 15 H121 L130 52 L139 15 H165 V135 H141 V70 L130 104 L119 70 V135 H95 Z" fill="#14171A"/>
           </g>
           <line x1="120" y1="8" x2="120" y2="70" stroke="#14171A" stroke-width="2.5"/>
-          <text x="138" y="42" class="font-unbounded" font-size="26" font-weight="900" fill="#14171A">LISTDOMEN</text>
+          <text x="138" y="42" class="font-unbounded" font-size="26" font-weight="900" fill="#14171A">ListMedia</text>
           <text x="138" y="64" class="font-unbounded" font-size="10" font-weight="700" fill="#FF5A43" letter-spacing="1.5">PR &amp; ДИДЖИТАЛ АГЕНТСТВО</text>
         </g>
         <text x="35" y="132" class="font-mono" font-size="10" font-weight="700" fill="#94A3B8">ВЕРСИЯ ДЛЯ СВЕТЛОГО ФОНА И ПЕЧАТИ</text>
@@ -273,9 +273,9 @@
       <g transform="translate(24, 24)">
         <g transform="scale(0.32)">
           <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FF5A43"/>
-          <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#FFFFFF"/>
+          <path d="M95 15 H121 L130 52 L139 15 H165 V135 H141 V70 L130 104 L119 70 V135 H95 Z" fill="#FFFFFF"/>
         </g>
-        <text x="70" y="28" class="font-unbounded" font-size="16" font-weight="800" fill="#FFFFFF">LISTDOMEN</text>
+        <text x="70" y="28" class="font-unbounded" font-size="16" font-weight="800" fill="#FFFFFF">ListMedia</text>
         <text x="70" y="44" class="font-mono" font-size="8.5" font-weight="700" fill="#FF5A43">PR &amp; DIGITAL</text>
 
         <!-- Status Tag -->

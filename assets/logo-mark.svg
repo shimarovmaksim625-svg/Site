@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 185 150" role="img" aria-label="LISTDOMEN">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 185 150" role="img" aria-label="ListMedia">
   <rect width="185" height="150" rx="30" fill="#FF5A43"/>
   <path d="M20 15 V135 H85 V105 H50 V15 H20 Z" fill="#FFFFFF"/>
-  <path d="M75 15 V135 H115 C145 135 165 110 165 75 C165 40 145 15 115 15 H75 Z M105 45 H115 C130 45 135 58 135 75 C135 92 130 105 115 105 H105 V45 Z" fill="#14171A"/>
+  <path d="M95 15 H121 L130 52 L139 15 H165 V135 H141 V70 L130 104 L119 70 V135 H95 Z" fill="#14171A"/>
 </svg>
