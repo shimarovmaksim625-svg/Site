@@ -1,6 +1,6 @@
-/* ListMedia — свечение за курсором на всех страницах.
+/* ListMedia — свечение за курсором на всех разделах.
    Координаты пишутся в CSS-переменные --glow-x / --glow-y,
-   слой свечения — первый слой background у .screen и .doc-page. */
+   слой свечения — первый слой background у .screen. */
 
 (() => {
   'use strict';
@@ -10,7 +10,7 @@
 
   if (!canHover || reduceMotion) return;
 
-  const targets = document.querySelectorAll('.screen, .doc-page');
+  const targets = document.querySelectorAll('.screen');
   if (!targets.length) return;
 
   const hide = (target) => {

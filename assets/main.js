@@ -32,7 +32,8 @@
     return heading ? heading.textContent.replace(/\s+/g, ' ').trim() : screen.id;
   });
 
-  let current = 0;
+  let current = -1;
+  const leaveTimers = new WeakMap();
 
   /* Задержка появления элементов внутри раздела */
   screens.forEach((screen) => {
@@ -50,7 +51,31 @@
 
   const setActive = (index, { announce = true, focus = false } = {}) => {
     const next = (index + screens.length) % screens.length;
+    const prev = current;
     current = next;
+
+    if (prev !== -1 && prev !== next) {
+      const prevScreen = screens[prev];
+      if (leaveTimers.has(prevScreen)) {
+        clearTimeout(leaveTimers.get(prevScreen));
+        leaveTimers.delete(prevScreen);
+      }
+      if (!reduceMotion) {
+        prevScreen.classList.add('is-leaving');
+        const timer = window.setTimeout(() => {
+          prevScreen.classList.remove('is-leaving');
+          leaveTimers.delete(prevScreen);
+        }, 460);
+        leaveTimers.set(prevScreen, timer);
+      }
+    }
+
+    const nextScreen = screens[next];
+    if (leaveTimers.has(nextScreen)) {
+      clearTimeout(leaveTimers.get(nextScreen));
+      leaveTimers.delete(nextScreen);
+    }
+    nextScreen.classList.remove('is-leaving');
 
     /* Если фокус был внутри уходящего раздела (например, на кнопке CTA),
        переносим его в новый раздел — иначе aria-hidden получит фокус. */
@@ -106,6 +131,7 @@
   const syncNavMode = () => {
     if (!nav) return;
     nav.inert = navMedia.matches && !navOpen;
+    if (main) main.inert = navMedia.matches && navOpen;
 
     if (!navMedia.matches && navOpen) {
       navOpen = false;
@@ -113,6 +139,7 @@
       document.body.classList.remove('nav-open');
       if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
       if (navScrim) navScrim.classList.remove('is-open');
+      if (main) main.inert = false;
     }
   };
 
@@ -158,9 +185,20 @@
 
   syncNavMode();
 
-  /* --- Переходы по ссылкам с data-goto ----------------------------------- */
+  /* --- Переходы по ссылкам с data-goto и прокрутка наверх ----------------- */
 
   document.addEventListener('click', (event) => {
+    const topLink = event.target.closest('[data-scroll-top]');
+    if (topLink) {
+      event.preventDefault();
+      const activeScreen = screens[current];
+      if (activeScreen) {
+        activeScreen.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
+      focusHeading(current);
+      return;
+    }
+
     const link = event.target.closest('[data-goto]');
     if (!link) return;
 
@@ -175,9 +213,22 @@
 
   /* --- Кнопки «Оставить заявку» ведут в раздел с формой ------------------ */
 
+  const form = document.getElementById('request-form');
+  const success = document.getElementById('form-success');
+  const successTitle = document.getElementById('success-title');
+  const resetButton = document.getElementById('form-reset');
+
+  const reopenForm = () => {
+    if (!form || !success || !form.hidden) return;
+    form.reset();
+    success.hidden = true;
+    form.hidden = false;
+  };
+
   openButtons.forEach((button) => {
     button.addEventListener('click', () => {
       setMenu(false);
+      reopenForm();
       navigate('request');
 
       window.requestAnimationFrame(() => {
@@ -228,7 +279,8 @@
 
   const syncFromLocation = () => {
     const id = window.location.hash.slice(1);
-    if (indexById.has(id)) setActive(indexById.get(id));
+    const nextIndex = indexById.has(id) ? indexById.get(id) : 0;
+    if (nextIndex !== current) setActive(nextIndex);
   };
 
   window.addEventListener('popstate', syncFromLocation);
@@ -238,14 +290,26 @@
 
   /* --- Форма заявки ------------------------------------------------------ */
 
-  const form = document.getElementById('request-form');
-  const success = document.getElementById('form-success');
-  const successTitle = document.getElementById('success-title');
-  const resetButton = document.getElementById('form-reset');
-
   if (form && success) {
+    const requiredTextFields = Array.from(
+      form.querySelectorAll('input[required]:not([type="checkbox"]), textarea[required]')
+    );
+
+    requiredTextFields.forEach((field) => {
+      field.addEventListener('input', () => field.setCustomValidity(''));
+    });
+
     form.addEventListener('submit', (event) => {
       event.preventDefault();
+
+      requiredTextFields.forEach((field) => {
+        if (field.value.length > 0 && field.value.trim() === '') {
+          field.setCustomValidity('Заполните это поле.');
+        } else {
+          field.setCustomValidity('');
+        }
+      });
+
       if (!form.reportValidity()) return;
 
       form.hidden = true;
